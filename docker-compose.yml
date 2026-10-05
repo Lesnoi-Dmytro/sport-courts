@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  database:
+    image: "postgres:18-alpine"
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sport_courts
+    volumes:
+      - sc_postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  sport_courts_api:
+    build: ./sport-courts-api
+    ports:
+      - 3000:3000
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: sport_courts
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: ${JWT_SECRET:-EXOX2VOzJVfjzT6SKcgG02kvjoLKnvtdFsIeTgMhtow}
+      SERVER_URL: http://localhost:3000
+      FRONTEND_URL: http://localhost:5173
+      SHOULD_SEED: "true"
+
+  sport_courts_frontend:
+    build:
+      context: ./stort-courts-frontend
+      args:
+        VITE_API_ORIGIN: localhost:3000
+        VITE_API_SECURE: "false"
+    ports:
+      - 5173:5173
+    depends_on:
+      - sport_courts_api
+    environment:
+      PORT: 5173
+
+volumes:
+  sc_postgres_data:
