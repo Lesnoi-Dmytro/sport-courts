@@ -1,0 +1,6 @@
+[submodule "sport-courts-api"]
+	path = sport-courts-api
+	url = https://github.com/Lesnoi-Dmytro/sport-courts-api
+[submodule "sport-courts-frontend"]
+	path = sport-courts-frontend
+	url = https://github.com/Lesnoi-Dmytro/stort-courts-frontend
