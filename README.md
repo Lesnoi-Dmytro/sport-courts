@@ -18,6 +18,13 @@ Start the project using the following command:
 docker compose up
 ```
 
+### 3. Access the project locally
+
+Once running, access the application at:
+
+- **Frontend:** `http://localhost:5173`
+- **Backend API docs:** `http://localhost:3000/api`
+
 ## 3. Creadentials
 
 ### Admin
