@@ -16,7 +16,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  
+
   sport_courts_api:
     build: ./sport-courts-api
     ports:
@@ -38,7 +38,7 @@ services:
 
   sport_courts_frontend:
     build:
-      context: ./stort-courts-frontend
+      context: ./sport-courts-frontend
       args:
         VITE_API_ORIGIN: localhost:3000
         VITE_API_SECURE: "false"
